@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Программа лояльности — Цветная</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Inter, Segoe UI, Arial, sans-serif;
+        }
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #f7fbff, #e8f4ff);
+            color: #0b2540;
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        #card {
+            width: 100%;
+            max-width: 760px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(11, 37, 64, 0.12);
+            padding: 22px;
+        }
+        header {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        #logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, #0b74ff, #0062d6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 24px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 18px;
+        }
+        p.lead {
+            margin: 10px 0 14px;
+            color: #234;
+        }
+        ul {
+            margin: 8px 0 14px 18px;
+        }
+        #promo {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 12px 0;
+        }
+        #code {
+            font-weight: 700;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: #f1f9ff;
+            border: 1px dashed #bfe0ff;
+            font-size: 16px;
+        }
+        button.btn {
+            background: #0062d6;
+            color: #fff;
+            border: none;
+            padding: 9px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        button.ghost {
+            background: transparent;
+            border: 1px solid #d0e7ff;
+            color: #0b2540;
+        }
+        footer {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+        a.store {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1px solid #eef6ff;
+            background: #fbfdff;
+            color: #0b2540;
+            font-weight: 600;
+        }
+        small.note {
+            display: block;
+            margin-top: 10px;
+            color: #557;
+        }
+        a.rules {
+            color: #0062d6;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+<div id="card">
+
+    <header>
+        <div id="logo">CV</div>
+        <div>
+            <h1 id="title">Программа лояльности — Цветная</h1>
+            <div id="networkLine" style="color:#3b5876;font-size:13px;margin-top:6px">
+                Для участников сети
+            </div>
+        </div>
+    </header>
+
+    <p class="lead" id="lead">
+        Наша бонусная программа использует принцип «кешбэк»: при покупке начисляются бонусы на карту
+        в мобильном приложении, которыми можно оплатить до 50% следующей покупки.
+    </p>
+
+    <strong>Ключевые преимущества:</strong>
+    <ul>
+        <li>Начисление бонусов при каждой покупке — от 3% до 10% в зависимости от уровня;</li>
+        <li>Бонусы действуют уже со следующего чека; можно тратить 1 бонус = 1 тг.;</li>
+        <li>Срок действия накопленных бонусов — 100 дней с последней покупки; программа действует через мобильное приложение.</li>
+    </ul>
+
+    <strong>Уровни:</strong>
+    <ul>
+        <li><b>СТАНДАРТ</b> (0 тг.) — 3% на ЛС*, 5% на остальное;</li>
+        <li><b>СЕРЕБРО</b> (от 50 000 тг.) — 3% на ЛС*, 7% на остальное;</li>
+        <li><b>ЗОЛОТО</b> (от 150 000 тг.) — 3% на ЛС*, 10% на остальное;</li>
+    </ul>
+
+    <div id="promo">
+        <div id="code">—</div>
+        <div style="display:flex;gap:8px">
+            <button class="btn" id="copyBtn">Скопировать промокод</button>
+            <button class="ghost" id="useBtn">Использовать в приложении</button>
+        </div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <a id="androidBtn" class="store" href="#" target="_blank">⬇ Android</a>
+        <a id="iosBtn" class="store" href="#" target="_blank">⬇ iOS</a>
+    </div>
+
+    <small class="note">
+        * Исключение: товары с предельной ценой.
+        <a class="rules" href="https://cvetnaya.kz/app_rules.html" target="_blank">
+            Полные правила программы
+        </a>.
+        (Источник: страница правил сети «Цветная».)
+    </small>
+
+    <footer>
+        <small style="color:#6b7">
+            Копий промокода на этом устройстве:
+            <span id="count">0</span>
+        </small>
+    </footer>
+
+</div>
+
+<script>
+    (() => {
+        const params = new URLSearchParams(location.search);
+
+        const network = params.get('network') || 'Цветная';
+        const provided = params.get('code');
+        const android = params.get('android') || '#';
+        const ios = params.get('ios') || '#';
+
+        document.getElementById('title').textContent = 'Программа лояльности — ' + network;
+        document.getElementById('networkLine').textContent = network;
+
+        const codeProvided = provided || (() => {
+            const t = Date.now().toString(36).slice(-6).toUpperCase();
+            return (network.replace(/[^A-ZА-Я0-9]/ig, '').slice(0, 4) || 'NET') + '-' + t;
+        })();
+
+        document.getElementById('code').textContent = codeProvided;
+
+        const androidBtn = document.getElementById('androidBtn');
+        const iosBtn = document.getElementById('iosBtn');
+
+        androidBtn.href = decodeURIComponent(android);
+        iosBtn.href = decodeURIComponent(ios);
+
+        document.getElementById('copyBtn').addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(codeProvided);
+                inc();
+                const b = document.getElementById('copyBtn');
+                b.textContent = 'Скопировано!';
+                setTimeout(() => b.textContent = 'Скопировать промокод', 1400);
+            } catch (e) {
+                alert('Не удалось автоматически скопировать. Скопируйте вручную: ' + codeProvided);
+            }
+        });
+
+        document.getElementById('useBtn').addEventListener('click', () => {
+            const target =
+                decodeURIComponent(android) !== '#' ? decodeURIComponent(android) : decodeURIComponent(ios);
+
+            if (target && target !== '#') {
+                location.href = target;
+            } else {
+                alert('Ссылка на приложение не указана.');
+            }
+        });
+
+        function inc() {
+            const key = 'promo_count_' + codeProvided;
+            const v = parseInt(localStorage.getItem(key) || '0') + 1;
+            localStorage.setItem(key, String(v));
+            document.getElementById('count').textContent = v;
+        }
+
+        function load() {
+            document.getElementById('count').textContent =
+                localStorage.getItem('promo_count_' + codeProvided) || '0';
+        }
+
+        load();
+    })();
+</script>
+
+</body>
+</html>
