@@ -22,16 +22,16 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            -webkit-tap-highlight-color: transparent; /* Убираем синий фон при тапе на мобильных */
+            -webkit-tap-highlight-color: transparent;
         }
 
         html {
             height: 100%;
-            -webkit-text-size-adjust: 100%; /* Предотвращает изменение размера текста на iOS */
+            -webkit-text-size-adjust: 100%;
         }
 
         body {
-            background: #f8f9fa; /* Простой фон для мобильных */
+            background: #f8f9fa;
             color: var(--dark);
             min-height: 100vh;
             display: flex;
@@ -42,7 +42,6 @@
             overflow-x: hidden;
         }
 
-        /* Упрощенный фон только для десктопов */
         @media (min-width: 769px) {
             body {
                 background: linear-gradient(135deg, var(--primary) 0%, #B8050F 30%, #FFFFFF 70%, #F0F0F0 100%);
@@ -57,42 +56,6 @@
                 height: 100%;
                 background: radial-gradient(circle at 20% 80%, rgba(227, 6, 19, 0.1) 0%, transparent 50%);
                 z-index: -1;
-            }
-
-            .floating-particles {
-                display: block;
-            }
-        }
-
-        /* Убираем все сложные анимации для мобильных */
-        @media (max-width: 768px) {
-            * {
-                animation: none !important;
-                transition: transform 0.2s ease, opacity 0.2s ease !important;
-            }
-
-            .floating-particles,
-            body::before {
-                display: none;
-            }
-
-            /* Убираем сложные градиенты и эффекты */
-            .promo-section::before,
-            .partner-benefits::before,
-            .btn::before {
-                display: none;
-            }
-
-            /* Упрощаем тени для производительности */
-            .card, .btn, .promo-section, .partner-benefits {
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            }
-
-            /* Отключаем сложные hover-эффекты на тач-устройствах */
-            @media (hover: none) {
-                .card:hover, .btn:hover, .promo-code:hover {
-                    transform: none !important;
-                }
             }
         }
 
@@ -117,25 +80,10 @@
             }
         }
 
-        /* Оптимизированная для мобильных разметка */
         @media (max-width: 768px) {
             .container {
                 padding: 20px 15px;
                 border-radius: 10px;
-                margin: 0;
-                box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-            }
-
-            /* Улучшаем скроллинг на iOS */
-            .container {
-                -webkit-overflow-scrolling: touch;
-            }
-
-            /* Фиксируем проблемы с viewport на Android */
-            img {
-                max-width: 100%;
-                height: auto;
-                display: block;
             }
         }
 
@@ -190,7 +138,6 @@
             margin-top: 10px;
         }
 
-        /* Упрощаем анимацию для всех устройств */
         .partner-benefits {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
             border-radius: 12px;
@@ -264,15 +211,12 @@
         .card h2 i {
             margin-right: 10px;
             color: var(--primary);
-            min-width: 24px;
-            text-align: center;
         }
 
-        .card p, .card p1, .card p2 {
+        .card p {
             line-height: 1.5;
             color: var(--dark);
             margin-bottom: 8px;
-            display: block;
         }
 
         .promo-section {
@@ -283,7 +227,6 @@
             margin-bottom: 30px;
             color: white;
             position: relative;
-            overflow: hidden;
         }
 
         .promo-section h2 {
@@ -296,6 +239,12 @@
             opacity: 0.9;
         }
 
+        .promo-code-container {
+            position: relative;
+            display: inline-block;
+            margin: 15px 0;
+        }
+
         .promo-code {
             background: white;
             color: var(--primary);
@@ -304,7 +253,6 @@
             padding: 12px 20px;
             border-radius: 8px;
             display: inline-block;
-            margin: 15px 0;
             letter-spacing: 2px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
             border: 2px dashed var(--primary);
@@ -314,30 +262,44 @@
             max-width: 100%;
             overflow-x: auto;
             white-space: nowrap;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        /* Сообщение о копировании - фиксированная позиция */
+        .copy-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            z-index: 10000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .copy-notification.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
         }
 
         .promo-code:active {
             transform: scale(0.98);
         }
 
-        .promo-code.copied::after {
-            content: '✓ Скопировано!';
-            position: absolute;
-            top: -35px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--success);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.85rem;
-            animation: fadeOut 1.5s forwards;
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            70% { opacity: 1; }
-            100% { opacity: 0; }
+        @media (max-width: 768px) {
+            .promo-code {
+                font-size: 1.3rem;
+                padding: 10px 15px;
+                min-width: 180px;
+            }
         }
 
         .download-buttons {
@@ -370,11 +332,6 @@
                 margin: 5px auto;
                 display: flex;
             }
-
-            .cta-section {
-                flex-direction: column;
-                align-items: center;
-            }
         }
 
         .btn-app {
@@ -387,17 +344,14 @@
             background: white;
             color: var(--primary);
             border: 2px solid var(--primary);
-            box-shadow: 0 2px 8px rgba(227, 6, 19, 0.1);
         }
 
         .btn:active {
             transform: translateY(2px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .btn i {
             margin-right: 8px;
-            font-size: 1.1rem;
         }
 
         footer {
@@ -409,60 +363,15 @@
             color: var(--dark);
             opacity: 0.7;
         }
-
-        /* Улучшаем работу на iOS Safari */
-        @supports (-webkit-touch-callout: none) {
-            body {
-                height: -webkit-fill-available;
-            }
-
-            .container {
-                max-height: 100vh;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-        }
-
-        /* Исправляем проблему с vh на мобильных */
-        @media (max-height: 700px) and (max-width: 768px) {
-            body {
-                align-items: flex-start;
-                padding-top: 10px;
-                padding-bottom: 10px;
-            }
-
-            .container {
-                margin: auto 0;
-            }
-        }
-
-        /* Оптимизация для старых Android */
-        @media screen and (-webkit-min-device-pixel-ratio:0) and (max-width: 768px) {
-            /* Отключаем градиенты на старых устройствах */
-            .promo-section, .partner-benefits {
-                background: var(--primary);
-            }
-
-            .partner-benefits {
-                background: var(--gold);
-            }
-
-            /* Упрощаем border-radius */
-            .container, .card, .btn, .promo-section, .partner-benefits {
-                border-radius: 10px;
-            }
-        }
-
-        /* Предотвращаем зум на полях ввода на iOS */
-        input, select, textarea {
-            font-size: 16px;
-        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Предзагрузка критичных ресурсов -->
-    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+<!-- Сообщение о копировании -->
+<div class="copy-notification" id="copyNotification">
+    <i class="fas fa-check-circle" style="margin-right: 8px;"></i> Промокод скопирован!
+</div>
+
 <div class="container">
     <div class="partner-header">
         <div class="logos-container">
@@ -487,8 +396,8 @@
         <div class="card">
             <h2><i class="fa-solid fa-gem"></i> Ваши преимущества</h2>
             <p>3% бонусов на лекарственные средства.</p>
-            <p1>10% бонусов на остальной ассортимент</p1>
-            <p2>Оплата бонусами — до 50% от суммы чека</p2>
+            <p>10% бонусов на остальной ассортимент</p>
+            <p>Оплата бонусами — до 50% от суммы чека</p>
         </div>
 
         <div class="card">
@@ -500,7 +409,9 @@
     <div class="promo-section">
         <h2>Ваш специальный промокод</h2>
         <p>Нажмите на код, чтобы скопировать его в буфер обмена</p>
-        <div class="promo-code" id="promoCode">TEHNOPARK2026</div>
+        <div class="promo-code-container">
+            <div class="promo-code" id="promoCode">TEHNOPARK2026</div>
+        </div>
         <p>Используйте промокод после регистрации в приложении «Цветная. Карта клиента».</p>
     </div>
 
@@ -525,83 +436,140 @@
 </div>
 
 <script>
-    // Оптимизированный скрипт для копирования промокода
     document.addEventListener('DOMContentLoaded', function() {
         const promoCodeElement = document.getElementById('promoCode');
-        if (promoCodeElement) {
-            promoCodeElement.addEventListener('click', function() {
-                const promoCode = this.innerText;
+        const copyNotification = document.getElementById('copyNotification');
 
-                // Используем современный API или fallback для старых устройств
+        if (promoCodeElement && copyNotification) {
+            // Функция для показа уведомления
+            function showCopyNotification() {
+                copyNotification.classList.add('show');
+
+                // Скрываем уведомление через 2 секунды
+                setTimeout(() => {
+                    copyNotification.classList.remove('show');
+                }, 2000);
+            }
+
+            // Основная функция копирования
+            function copyToClipboard(text) {
+                // Пытаемся использовать современный Clipboard API
                 if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(promoCode).then(() => {
-                        showCopyFeedback(this);
-                    }).catch(() => {
-                        useFallbackCopy(this, promoCode);
+                    navigator.clipboard.writeText(text).then(() => {
+                        showCopyNotification();
+                    }).catch(err => {
+                        console.log('Ошибка Clipboard API:', err);
+                        useFallbackCopyMethod(text);
                     });
                 } else {
-                    useFallbackCopy(this, promoCode);
+                    // Fallback для старых браузеров и мобильных устройств
+                    useFallbackCopyMethod(text);
                 }
+            }
+
+            // Fallback метод копирования
+            function useFallbackCopyMethod(text) {
+                // Создаем временный textarea
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+
+                // Делаем его невидимым, но не скрываем полностью
+                textArea.style.position = 'fixed';
+                textArea.style.top = '0';
+                textArea.style.left = '0';
+                textArea.style.width = '2em';
+                textArea.style.height = '2em';
+                textArea.style.padding = '0';
+                textArea.style.border = 'none';
+                textArea.style.outline = 'none';
+                textArea.style.boxShadow = 'none';
+                textArea.style.background = 'transparent';
+                textArea.style.opacity = '0';
+
+                document.body.appendChild(textArea);
+
+                try {
+                    // Пытаемся выделить и скопировать
+                    textArea.focus();
+                    textArea.select();
+
+                    // Для мобильных устройств устанавливаем диапазон выделения
+                    if (textArea.setSelectionRange) {
+                        textArea.setSelectionRange(0, textArea.value.length);
+                    }
+
+                    const successful = document.execCommand('copy');
+
+                    if (successful) {
+                        showCopyNotification();
+                    } else {
+                        // Если не удалось скопировать, предлагаем скопировать вручную
+                        alert('Промокод: ' + text + '\n\nСкопируйте промокод вручную');
+                    }
+                } catch (err) {
+                    console.log('Ошибка fallback копирования:', err);
+                    alert('Промокод: ' + text + '\n\nСкопируйте промокод вручную');
+                } finally {
+                    // Убираем временный элемент
+                    document.body.removeChild(textArea);
+                }
+            }
+
+            // Обработчик клика для ПК
+            promoCodeElement.addEventListener('click', function(e) {
+                e.preventDefault();
+                copyToClipboard(this.textContent);
             });
 
-            // Добавляем обработчик для тач-устройств
+            // Обработчик для тач-устройств
             promoCodeElement.addEventListener('touchstart', function(e) {
                 e.preventDefault();
                 this.style.transform = 'scale(0.95)';
             }, { passive: false });
 
-            promoCodeElement.addEventListener('touchend', function() {
+            promoCodeElement.addEventListener('touchend', function(e) {
+                e.preventDefault();
                 this.style.transform = 'scale(1)';
+                copyToClipboard(this.textContent);
+            }, { passive: false });
+
+            // Дополнительно: делаем текст выделяемым долгим тапом
+            promoCodeElement.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                // На мобильных это покажет контекстное меню с опцией копирования
+            });
+
+            // Информационное сообщение при долгом нажатии на мобильных
+            let longPressTimer;
+            promoCodeElement.addEventListener('touchstart', function(e) {
+                longPressTimer = setTimeout(() => {
+                    // Показываем подсказку о долгом нажатии
+                    this.style.backgroundColor = '#f0f0f0';
+                }, 1000);
+            });
+
+            promoCodeElement.addEventListener('touchend', function() {
+                clearTimeout(longPressTimer);
+                this.style.backgroundColor = '';
             });
         }
 
-        function showCopyFeedback(element) {
-            element.classList.add('copied');
-            setTimeout(() => {
-                element.classList.remove('copied');
-            }, 1500);
-        }
-
-        function useFallbackCopy(element, text) {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            textArea.style.position = 'fixed';
-            textArea.style.left = '-999999px';
-            textArea.style.top = '-999999px';
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-
-            try {
-                document.execCommand('copy');
-                showCopyFeedback(element);
-            } catch (err) {
-                console.error('Ошибка копирования:', err);
-                alert('Не удалось скопировать промокод. Скопируйте вручную: ' + text);
-            } finally {
-                document.body.removeChild(textArea);
+        // Исправление для iOS - предотвращение масштабирования
+        document.addEventListener('touchmove', function(e) {
+            if (e.scale !== 1) {
+                e.preventDefault();
             }
-        }
+        }, { passive: false });
 
-        // Отключаем анимации на устройствах с низкой производительностью
-        if ('connection' in navigator) {
-            const connection = navigator.connection;
-            if (connection && (connection.saveData || (connection.effectiveType && connection.effectiveType.includes('2g')))) {
-                document.querySelectorAll('*').forEach(el => {
-                    el.style.animation = 'none';
-                    el.style.transition = 'none';
-                });
+        // Улучшение отзывчивости на мобильных
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
             }
-        }
-
-        // Исправление высоты на мобильных устройствах
-        function fixViewportHeight() {
-            const vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-        }
-
-        window.addEventListener('resize', fixViewportHeight);
-        fixViewportHeight();
+            lastTouchEnd = now;
+        }, false);
     });
 </script>
 </body>
