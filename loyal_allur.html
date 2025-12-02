@@ -2,17 +2,17 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Программа лояльности «Цветная карта клиента» | Партнер Allur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Программа лояльности «Цветная карта клиента» | Партнер Tehnopark</title>
     <style>
         :root {
-            --primary: #E30613; /* Красный Allur */
+            --primary: #E30613; /* Красный */
             --secondary: #FFFFFF; /* Белый */
             --accent: #E30613; /* Красный акцент */
             --light: #f8f9fa;
             --dark: #1A1A1A; /* Темный для контраста */
             --success: #28a745;
-            --partner: #0033A0; /* Синий Allur для акцентов */
+            --partner: #0033A0; /* Синий */
             --gold: #FFD700; /* Золотой цвет */
             --gold-dark: #D4AF37; /* Темный золотой */
         }
@@ -22,443 +22,316 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent; /* Убираем синий фон при тапе на мобильных */
+        }
+
+        html {
+            height: 100%;
+            -webkit-text-size-adjust: 100%; /* Предотвращает изменение размера текста на iOS */
         }
 
         body {
-            background: linear-gradient(135deg, var(--primary) 0%, #B8050F 30%, #FFFFFF 70%, #F0F0F0 100%);
+            background: #f8f9fa; /* Простой фон для мобильных */
             color: var(--dark);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 15px;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Анимированный фон */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                    radial-gradient(circle at 20% 80%, rgba(227, 6, 19, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
-                    radial-gradient(circle at 40% 40%, rgba(227, 6, 19, 0.05) 0%, transparent 50%);
-            z-index: -1;
-            animation: backgroundShift 15s ease-in-out infinite;
-        }
-
-        @keyframes backgroundShift {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 1;
+        /* Упрощенный фон только для десктопов */
+        @media (min-width: 769px) {
+            body {
+                background: linear-gradient(135deg, var(--primary) 0%, #B8050F 30%, #FFFFFF 70%, #F0F0F0 100%);
             }
-            50% {
-                transform: scale(1.05);
-                opacity: 0.8;
+
+            body::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle at 20% 80%, rgba(227, 6, 19, 0.1) 0%, transparent 50%);
+                z-index: -1;
+            }
+
+            .floating-particles {
+                display: block;
             }
         }
 
-        /* Плавающие частицы */
-        .floating-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: float 20s infinite linear;
-        }
-
-        .particle:nth-child(1) {
-            width: 8px;
-            height: 8px;
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-            animation-duration: 25s;
-        }
-
-        .particle:nth-child(2) {
-            width: 12px;
-            height: 12px;
-            top: 60%;
-            left: 80%;
-            animation-delay: 2s;
-            animation-duration: 30s;
-        }
-
-        .particle:nth-child(3) {
-            width: 6px;
-            height: 6px;
-            top: 80%;
-            left: 20%;
-            animation-delay: 4s;
-            animation-duration: 20s;
-        }
-
-        .particle:nth-child(4) {
-            width: 10px;
-            height: 10px;
-            top: 30%;
-            left: 70%;
-            animation-delay: 6s;
-            animation-duration: 35s;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0) rotate(0deg);
-                opacity: 0;
+        /* Убираем все сложные анимации для мобильных */
+        @media (max-width: 768px) {
+            * {
+                animation: none !important;
+                transition: transform 0.2s ease, opacity 0.2s ease !important;
             }
-            10% {
-                opacity: 1;
+
+            .floating-particles,
+            body::before {
+                display: none;
             }
-            90% {
-                opacity: 1;
+
+            /* Убираем сложные градиенты и эффекты */
+            .promo-section::before,
+            .partner-benefits::before,
+            .btn::before {
+                display: none;
             }
-            100% {
-                transform: translateY(-100px) translateX(50px) rotate(360deg);
-                opacity: 0;
+
+            /* Упрощаем тени для производительности */
+            .card, .btn, .promo-section, .partner-benefits {
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            /* Отключаем сложные hover-эффекты на тач-устройствах */
+            @media (hover: none) {
+                .card:hover, .btn:hover, .promo-code:hover {
+                    transform: none !important;
+                }
             }
         }
 
         .container {
             max-width: 1200px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            animation: containerEntrance 1s ease-out;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            animation: containerEntrance 0.5s ease-out;
         }
 
         @keyframes containerEntrance {
             0% {
                 opacity: 0;
-                transform: translateY(50px) scale(0.9);
+                transform: translateY(20px);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translateY(0);
+            }
+        }
+
+        /* Оптимизированная для мобильных разметка */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+                border-radius: 10px;
+                margin: 0;
+                box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            }
+
+            /* Улучшаем скроллинг на iOS */
+            .container {
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* Фиксируем проблемы с viewport на Android */
+            img {
+                max-width: 100%;
+                height: auto;
+                display: block;
             }
         }
 
         .partner-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
+            margin-bottom: 25px;
         }
 
         .logos-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-            width: 100%;
+            gap: 20px;
+            text-align: center;
+        }
+
+        @media (min-width: 481px) {
+            .logos-container {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
         }
 
         .logo-img {
-            max-width: 180px;
+            max-width: 150px;
             height: auto;
-            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
-            animation: logoFloat 6s ease-in-out infinite;
+            object-fit: contain;
         }
 
-        @keyframes logoFloat {
-            0%, 100% {
-                transform: translateY(0);
+        @media (max-width: 768px) {
+            .logo-img {
+                max-width: 120px;
             }
-            50% {
-                transform: translateY(-10px);
+
+            .partner-logo {
+                max-width: 180px !important;
             }
         }
 
         .partner-logo {
-            max-width: 150px;
-            animation: logoFloat 6s ease-in-out infinite 1s;
+            max-width: 250px;
         }
 
         .partner-badge {
             display: inline-block;
             background: var(--partner);
             color: white;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 0.9rem;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 600;
             margin-top: 10px;
-            animation: pulse 2s infinite;
         }
 
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(0, 51, 160, 0.4);
-            }
-            70% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 10px rgba(0, 51, 160, 0);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(0, 51, 160, 0);
-            }
-        }
-
-        header {
+        /* Упрощаем анимацию для всех устройств */
+        .partner-benefits {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
             text-align: center;
-            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+            border: 2px solid var(--gold);
         }
 
-        .logo-text {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(to right, var(--primary), var(--partner));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: textGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes textGlow {
-            from {
-                filter: drop-shadow(0 0 5px rgba(227, 6, 19, 0.5));
-            }
-            to {
-                filter: drop-shadow(0 0 15px rgba(227, 6, 19, 0.8));
-            }
-        }
-
-        h1 {
-            font-size: 2.2rem;
+        .partner-benefits h3 {
+            color: #000;
             margin-bottom: 15px;
-            color: var(--dark);
-            animation: slideInFromLeft 1s ease-out 0.3s both;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.3;
         }
 
-        @keyframes slideInFromLeft {
-            0% {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
+        @media (max-width: 768px) {
+            .partner-benefits h3 {
+                font-size: 1.2rem;
+                padding: 0 10px;
             }
         }
 
-        .partner-highlight {
-            color: var(--primary);
+        .gold-card-image {
+            max-width: 280px;
+            width: 100%;
+            height: auto;
+            margin-top: 15px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            border: 2px solid var(--gold);
         }
 
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            color: var(--dark);
-            animation: slideInFromRight 1s ease-out 0.5s both;
-        }
-
-        @keyframes slideInFromRight {
-            0% {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
+        @media (max-width: 768px) {
+            .gold-card-image {
+                max-width: 220px;
             }
         }
 
         .content-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .content-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 25px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-top: 4px solid var(--primary);
-            animation: cardEntrance 0.8s ease-out both;
-            animation-delay: calc(var(--card-index) * 0.2s);
-        }
-
-        .card:nth-child(1) { --card-index: 1; }
-        .card:nth-child(2) { --card-index: 2; }
-        .card:nth-child(3) { --card-index: 3; }
-
-        @keyframes cardEntrance {
-            0% {
-                opacity: 0;
-                transform: translateY(30px) scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border-top: 3px solid var(--primary);
         }
 
         .card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--dark);
             display: flex;
             align-items: center;
-            color: var(--dark);
         }
 
         .card h2 i {
             margin-right: 10px;
             color: var(--primary);
-            animation: iconSpin 8s linear infinite;
+            min-width: 24px;
+            text-align: center;
         }
 
-        @keyframes iconSpin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .card p {
-            line-height: 1.6;
-            opacity: 0.9;
+        .card p, .card p1, .card p2 {
+            line-height: 1.5;
             color: var(--dark);
-            margin-bottom: 10px;
-        }
-
-        .card p1, .card p2 {
+            margin-bottom: 8px;
             display: block;
-            line-height: 1.6;
-            opacity: 0.9;
-            color: var(--dark);
-            margin-bottom: 5px;
         }
 
         .promo-section {
             background: linear-gradient(135deg, var(--primary), #B8050F);
-            border-radius: 15px;
-            padding: 30px;
+            border-radius: 12px;
+            padding: 25px 20px;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             color: white;
-            box-shadow: 0 10px 20px rgba(227, 6, 19, 0.2);
-            animation: promoPulse 4s ease-in-out infinite;
             position: relative;
             overflow: hidden;
         }
 
-        @keyframes promoPulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 10px 20px rgba(227, 6, 19, 0.2);
-            }
-            50% {
-                transform: scale(1.01);
-                box-shadow: 0 15px 30px rgba(227, 6, 19, 0.4);
-            }
+        .promo-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
         }
 
-        .promo-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% {
-                transform: translateX(-100%) translateY(-100%) rotate(45deg);
-            }
-            100% {
-                transform: translateX(100%) translateY(100%) rotate(45deg);
-            }
+        .promo-section p {
+            margin-bottom: 15px;
+            opacity: 0.9;
         }
 
         .promo-code {
-            background: var(--secondary);
+            background: white;
             color: var(--primary);
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            padding: 15px 30px;
-            border-radius: 10px;
+            padding: 12px 20px;
+            border-radius: 8px;
             display: inline-block;
-            margin: 20px 0;
-            letter-spacing: 3px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin: 15px 0;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
             border: 2px dashed var(--primary);
             cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
             user-select: none;
-            animation: codeBounce 2s infinite;
+            transition: transform 0.2s ease;
+            max-width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
         }
 
-        @keyframes codeBounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-10px);
-            }
-            60% {
-                transform: translateY(-5px);
-            }
-        }
-
-        .promo-code:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            animation: none;
+        .promo-code:active {
+            transform: scale(0.98);
         }
 
         .promo-code.copied::after {
-            content: 'Скопировано!';
+            content: '✓ Скопировано!';
             position: absolute;
-            top: -40px;
+            top: -35px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--success);
             color: white;
             padding: 5px 10px;
             border-radius: 5px;
-            font-size: 0.9rem;
-            animation: fadeOut 2s forwards;
+            font-size: 0.85rem;
+            animation: fadeOut 1.5s forwards;
         }
 
         @keyframes fadeOut {
@@ -467,299 +340,141 @@
             100% { opacity: 0; }
         }
 
-        .cta-section {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
         .download-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         .btn {
-            padding: 15px 30px;
-            border-radius: 50px;
+            padding: 14px 25px;
+            border-radius: 25px;
             font-weight: 600;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
-            font-size: 1.1rem;
-            position: relative;
-            overflow: hidden;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 5px;
+            min-width: 200px;
+            max-width: 100%;
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 5px 15px rgba(227, 6, 19, 0.4);
-            animation: buttonGlow 3s infinite;
-        }
-
-        @keyframes buttonGlow {
-            0%, 100% {
-                box-shadow: 0 5px 15px rgba(227, 6, 19, 0.4);
+        @media (max-width: 768px) {
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                padding: 12px 20px;
+                margin: 5px auto;
+                display: flex;
             }
-            50% {
-                box-shadow: 0 5px 20px rgba(227, 6, 19, 0.8);
+
+            .cta-section {
+                flex-direction: column;
+                align-items: center;
             }
-        }
-
-        .btn-primary:hover {
-            background: #B8050F;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(227, 6, 19, 0.6);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-3px);
         }
 
         .btn-app {
             background: var(--dark);
             color: white;
-            min-width: 180px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
-        .btn-app:hover {
-            background: #333;
-            transform: translateY(-3px);
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: 0 2px 8px rgba(227, 6, 19, 0.1);
+        }
+
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .btn i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .partner-benefits {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
-            border: 2px solid var(--gold);
-            position: relative;
-            overflow: hidden;
-            animation: goldShine 4s ease-in-out infinite;
-        }
-
-        @keyframes goldShine {
-            0%, 100% {
-                box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
-            }
-            50% {
-                box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
-            }
-        }
-
-        .partner-benefits::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-            transform: rotate(30deg);
-            animation: goldRotate 10s linear infinite;
-        }
-
-        @keyframes goldRotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .partner-benefits h3 {
-            color: #000;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 700;
-            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
-            animation: textPulse 2s infinite;
-        }
-
-        @keyframes textPulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.02);
-            }
-        }
-
-        .partner-benefits h3 i {
-            margin-right: 15px;
-            color: #000;
-            animation: giftShake 2s infinite;
-        }
-
-        @keyframes giftShake {
-            0%, 100% {
-                transform: rotate(0deg);
-            }
-            25% {
-                transform: rotate(-10deg);
-            }
-            75% {
-                transform: rotate(10deg);
-            }
-        }
-
-        .gold-card-image {
-            max-width: 300px;
-            width: 100%;
-            height: auto;
-            margin-top: 20px;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            border: 3px solid var(--gold);
-            animation: cardFloat 6s ease-in-out infinite;
-        }
-
-        @keyframes cardFloat {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            33% {
-                transform: translateY(-10px) rotate(1deg);
-            }
-            66% {
-                transform: translateY(-5px) rotate(-1deg);
-            }
+            margin-right: 8px;
+            font-size: 1.1rem;
         }
 
         footer {
             text-align: center;
-            margin-top: 40px;
-            opacity: 0.7;
-            font-size: 0.9rem;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            font-size: 0.85rem;
             color: var(--dark);
-            animation: fadeIn 2s ease-out 1s both;
+            opacity: 0.7;
         }
 
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
+        /* Улучшаем работу на iOS Safari */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                height: -webkit-fill-available;
             }
-            100% {
-                opacity: 0.7;
-            }
-        }
 
-        @media (max-width: 768px) {
             .container {
-                padding: 25px;
+                max-height: 100vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        /* Исправляем проблему с vh на мобильных */
+        @media (max-height: 700px) and (max-width: 768px) {
+            body {
+                align-items: flex-start;
+                padding-top: 10px;
+                padding-bottom: 10px;
             }
 
-            h1 {
-                font-size: 1.8rem;
+            .container {
+                margin: auto 0;
+            }
+        }
+
+        /* Оптимизация для старых Android */
+        @media screen and (-webkit-min-device-pixel-ratio:0) and (max-width: 768px) {
+            /* Отключаем градиенты на старых устройствах */
+            .promo-section, .partner-benefits {
+                background: var(--primary);
             }
 
-            .logo-img {
-                max-width: 140px;
+            .partner-benefits {
+                background: var(--gold);
             }
 
-            .partner-logo {
-                max-width: 120px;
+            /* Упрощаем border-radius */
+            .container, .card, .btn, .promo-section, .partner-benefits {
+                border-radius: 10px;
             }
+        }
 
-            .logos-container {
-                gap: 20px;
-            }
-
-            .promo-code {
-                font-size: 1.5rem;
-                padding: 12px 20px;
-            }
-
-            .btn {
-                padding: 12px 25px;
-                font-size: 1rem;
-            }
-
-            .download-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn-app {
-                width: 100%;
-                max-width: 250px;
-            }
-
-            .partner-benefits h3 {
-                font-size: 1.4rem;
-            }
+        /* Предотвращаем зум на полях ввода на iOS */
+        input, select, textarea {
+            font-size: 16px;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Предзагрузка критичных ресурсов -->
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-<!-- Плавающие частицы фона -->
-<div class="floating-particles">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-</div>
-
 <div class="container">
     <div class="partner-header">
         <div class="logos-container">
-            <!-- Замените на ваш логотип -->
             <img src="Logo_colour.png" alt="Цветная карта клиента" class="logo-img">
-            <div style="text-align: center;">
-                <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">+</div>
-                <div style="font-size: 0.9rem; color: var(--dark);"></div>
-            </div>
-            <!-- Логотип Allur -->
-            <img src="allur_color.png" alt="Allur" class="logo-img partner-logo">
+            <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary); margin: 10px;">+</div>
+            <img src="технопарк.png" alt="Tehnopark_kz" class="logo-img partner-logo">
             <div class="partner-badge">Специальное предложение</div>
         </div>
     </div>
 
     <div class="partner-benefits">
         <h3><i class="fas fa-gift"></i> Сеть аптек "Цветная" дарит Вам подарок — Золотую карту!</h3>
-        <!-- Вставьте ваше изображение золотой карты здесь -->
         <img src="goldcard_cvt_spmhkp.png" alt="Золотая карта" class="gold-card-image">
     </div>
 
@@ -777,17 +492,16 @@
         </div>
 
         <div class="card">
-            <h2><i class="fas fa-percentage"></i> Персональные скидки</h2>
-            <p>Мы подбираем скидки специально для вас на основе ваших предпочтений и истории покупок.</p>
+            <h2><i class="fa-solid fa-leaf"></i> Уникальные предложения</h2>
+            <p>БАДы и витамины Solgar, Naturhouse, Nature's Bounty, все для гигиены полости рта от премиального испанского бренда Dentaid, дерматокосметика брендов Bioderma, Vichy, La-Roche Posay, Cerave, Biotherm</p>
         </div>
     </div>
 
     <div class="promo-section">
         <h2>Ваш специальный промокод</h2>
         <p>Нажмите на код, чтобы скопировать его в буфер обмена</p>
-        <div class="promo-code" id="promoCode">ALLUR2023</div>
-        <p>Используйте промокод при регистрации в приложении «Цветная. Карта клиента».</p>
-        <p>Промокод действителен в течение 30 дней с момента активации</p>
+        <div class="promo-code" id="promoCode">TEHNOPARK2026</div>
+        <p>Используйте промокод после регистрации в приложении «Цветная. Карта клиента».</p>
     </div>
 
     <div class="download-buttons">
@@ -801,45 +515,93 @@
             <i class="fas fa-file-alt"></i> Правила программы
         </a>
         <a href="instructions.pdf" class="btn btn-secondary" download target="_blank" rel="noopener noreferrer" title="Скачать инструкцию по установке и регистрации">
-            <i class="fas fa-file-pdf"></i>&nbsp; Инструкция по установке (PDF)
+            <i class="fas fa-file-pdf"></i> Инструкция по установке (PDF)
         </a>
     </div>
 
     <footer>
-        <p>© 2023 Программа лояльности «Цветная карта клиента» | Партнер Allur. Все права защищены.</p>
+        <p>© 2023 Программа лояльности «Цветная карта клиента» | Партнер TEHNOPARK KZ. Все права защищены.</p>
     </footer>
 </div>
 
 <script>
-    // Функция для копирования промокода в буфер обмена
-    document.getElementById('promoCode').addEventListener('click', function() {
-        const promoCode = this.innerText;
-        navigator.clipboard.writeText(promoCode).then(() => {
-            // Показываем сообщение о копировании
-            this.classList.add('copied');
+    // Оптимизированный скрипт для копирования промокода
+    document.addEventListener('DOMContentLoaded', function() {
+        const promoCodeElement = document.getElementById('promoCode');
+        if (promoCodeElement) {
+            promoCodeElement.addEventListener('click', function() {
+                const promoCode = this.innerText;
+
+                // Используем современный API или fallback для старых устройств
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(promoCode).then(() => {
+                        showCopyFeedback(this);
+                    }).catch(() => {
+                        useFallbackCopy(this, promoCode);
+                    });
+                } else {
+                    useFallbackCopy(this, promoCode);
+                }
+            });
+
+            // Добавляем обработчик для тач-устройств
+            promoCodeElement.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                this.style.transform = 'scale(0.95)';
+            }, { passive: false });
+
+            promoCodeElement.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
+        }
+
+        function showCopyFeedback(element) {
+            element.classList.add('copied');
             setTimeout(() => {
-                this.classList.remove('copied');
-            }, 2000);
-        });
-    });
+                element.classList.remove('copied');
+            }, 1500);
+        }
 
-    // Анимация появления элементов при скролле
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+        function useFallbackCopy(element, text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animationPlayState = 'running';
+            try {
+                document.execCommand('copy');
+                showCopyFeedback(element);
+            } catch (err) {
+                console.error('Ошибка копирования:', err);
+                alert('Не удалось скопировать промокод. Скопируйте вручную: ' + text);
+            } finally {
+                document.body.removeChild(textArea);
             }
-        });
-    }, observerOptions);
+        }
 
-    // Наблюдаем за карточками
-    document.querySelectorAll('.card').forEach(card => {
-        observer.observe(card);
+        // Отключаем анимации на устройствах с низкой производительностью
+        if ('connection' in navigator) {
+            const connection = navigator.connection;
+            if (connection && (connection.saveData || (connection.effectiveType && connection.effectiveType.includes('2g')))) {
+                document.querySelectorAll('*').forEach(el => {
+                    el.style.animation = 'none';
+                    el.style.transition = 'none';
+                });
+            }
+        }
+
+        // Исправление высоты на мобильных устройствах
+        function fixViewportHeight() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+
+        window.addEventListener('resize', fixViewportHeight);
+        fixViewportHeight();
     });
 </script>
 </body>
